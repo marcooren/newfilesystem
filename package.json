@@ -1,0 +1,24 @@
+{
+    "name": "newfilesystem",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "node_modules/.bin/http-server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/marcooren/newfilesystem.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/marcooren/newfilesystem/issues"
+    },
+    "homepage": "https://github.com/marcooren/newfilesystem#readme",
+    "dependencies": {
+        "http-server": "^0.9.0",
+        "jquery": "^3.1.1"
+    }
+}
