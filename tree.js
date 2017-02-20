@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
   var currentFolder = 0;
   var printed = 0;
   var folder_stack = [];
