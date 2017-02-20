@@ -7,7 +7,7 @@ $(document).ready(function() {
         // Avoid the real one
         event.preventDefault();
         // Show contextmenu
-        console.log(event);
+      //  console.log(event);
 
         //  console.log($(this));
         $(".custom-menu").finish().toggle(100).
@@ -73,6 +73,7 @@ $(document).ready(function() {
 
 
     drawLeft();
+    $('.left0').children('ul').children('ul').children('ul').children('ul').toggle();
     $('.left0').children('ul').children('ul').children('ul').toggle();
     $('.left0').children('ul').children('ul').toggle();
     $('.left0').children('ul').toggle();
@@ -174,6 +175,94 @@ function drawRight() {
     });
     PrintPath(currentFolder, fsStorage);
 }
+
+
+function drawRightRefresh() {
+
+    //  var myClick = '';
+    printCurrentFolder2();
+    $('.right_view [class^="right"]').off();
+    $('.right_view [class^="right"]').click(function(event) {
+        event.stopPropagation();
+        //console.log(($(this).attr('class').replace("right", '')));
+        myClick = +($(this).attr('class').replace("right", ''));
+        found = 0;
+        folderStack.push(currentFolder);
+        FileOrFolder(myClick, fsStorage);
+        //   console.log(found);
+        //  console.log(found);
+        if (found == 2) {
+            currentFolder = +($(this).attr('class').replace("right", ''));
+        }
+        drawRight();
+        if (found == 1) {
+            openFile(myClick, fsStorage);
+        }
+
+    });
+
+    $('.right_view [class^="right"]').on("contextmenu", function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        myClick = +($(this).attr('class').replace("right", ''));
+
+        $(".custom-menu2").finish().toggle(100).css({
+            top: event.pageY + "px",
+            left: event.pageX + "px"
+        });
+    });
+
+    $(document).bind("mousedown", function(e) {
+        // If the clicked element is not the menu
+        //  console.log($(this));
+        if (!$(e.target).parents(".custom-menu2").length > 0) {
+            // Hide it
+            $(".custom-menu2").hide(100);
+        }
+    });
+
+
+    $(".custom-menu2 li").click(function() {
+        // This is the triggered action name
+        // console.log(this);
+        switch ($(this).attr("data-action")) {
+
+            // A case for each action. Your actions here
+            case "1":
+                //   console.log(this);
+                finished = 0;
+                eraseMe(currentFolder, fsStorage, myClick);
+                //               createFileIn(currentFolder, fsStorage, foldername, '', 1);
+                buildFlatArray();
+                drawLeft();
+                drawRight();
+                break;
+            case "2":
+                var folderName = prompt("Enter new name to rename to: ");
+                finished = 0;
+                exists = 0;
+                fileOrFolderExists(currentFolder, folderName, fsStorage);
+                if (exists) {
+                    alert("there is already a file or folder in current dir with that name");
+                    break;
+                }
+                if (folderName !== null && folderName !== '') {
+                    renameMe(currentFolder, fsStorage, folderName, myClick);
+                    buildFlatArray();
+                    drawLeft();
+                    drawRight();
+                }
+                break;
+        }
+
+        // Hide it AFTER the action was triggered
+        $(".custom-menu2").hide(100);
+    });
+    PrintPath(currentFolder, fsStorage);
+}
+
+
+
 
 function drawNav() {
     var nav_menu = '<div class="main_menu"></div><button class="back">Back</button>' +

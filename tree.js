@@ -72,6 +72,8 @@
   }
 
   function printTree() {
+      $('.left_view').off();
+
       $('.left_view').html('');
       $('.left_view').append('<ul class="left0"><img src="./images/closed_dirs.jpg">root</ul>');
       for (var i = 0; i < fsStorage.length; i++) {
@@ -255,7 +257,7 @@
               basePath.push(a);
           }
       }
-      console.log(path);
+     // console.log(path);
       return path;
   }
 
@@ -333,6 +335,7 @@
       currentFolder = 0;
       buildArray(newArray, fsStorage);
       localStorage.setItem("oldstorage", JSON.stringify(newArray));
+      currentFolder=oldCurrentFolder;
   }
 
   function reBuildTree() {
@@ -346,7 +349,7 @@
       for (var i = 1; i < flatArray.length; i++) {
           if(idCounter<1+flatArray[i].id) {
               idCounter=flatArray[i].id+1;
-              console.log(idCounter);
+            //  console.log(idCounter);
           }
           if (flatArray[i].content) {
               createFileIn2(flatArray[i].parent, newFileSystem, flatArray[i].name, flatArray[i].content, 2, flatArray[i].id);
