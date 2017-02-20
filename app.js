@@ -36,30 +36,30 @@ $(document).ready(function() {
             // A case for each action. Your actions here
             case "1":
                 //     console.log(this);
-                var foldername = prompt("Enter folder name to create", "newfolder");
+                var folderName = prompt("Enter folder name to create", "newfolder");
                 exists = 0;
-                file_or_folder_exists(currentFolder, foldername, fsStorage);
+                fileOrFolderExists(currentFolder, folderName, fsStorage);
                 if (exists) {
                     alert("there is already a file or folder in current dir with that name");
                     break;
                 }
-                if (foldername !== null && foldername !== '') {
-                    createFileIn(currentFolder, fsStorage, foldername, '', 1);
+                if (folderName !== null && folderName !== '') {
+                    createFileIn(currentFolder, fsStorage, folderName, '', 1);
                     buildFlatArray();
                     drawLeft();
                     drawRight();
                 }
                 break;
             case "2":
-                var foldername = prompt("Enter a file name to create", "newfile.txt");
+                var folderName = prompt("Enter a file name to create", "newfile.txt");
                 exists = 0;
-                file_or_folder_exists(currentFolder, foldername, fsStorage);
+                fileOrFolderExists(currentFolder, folderName, fsStorage);
                 if (exists) {
                     alert("there is already a file or folder in current dir with that name");
                     break;
                 }
-                if (foldername !== null && foldername !== '') {
-                    createFileIn(currentFolder, fsStorage, foldername, '#', 2);
+                if (folderName !== null && folderName !== '') {
+                    createFileIn(currentFolder, fsStorage, folderName, '#', 2);
                     buildFlatArray();
                     drawLeft();
                     drawRight();
@@ -86,7 +86,7 @@ $(document).ready(function() {
 
 function drawLeft() {
     //  printCurrentFolder();
-    print_path(currentFolder, fsStorage);
+    PrintPath(currentFolder, fsStorage);
     printTree();
 
 }
@@ -110,7 +110,7 @@ function drawRight() {
         }
         drawRight();
         if (found == 1) {
-            open_file(myClick, fsStorage);
+            openFile(myClick, fsStorage);
         }
 
     });
@@ -152,16 +152,16 @@ function drawRight() {
                 drawRight();
                 break;
             case "2":
-                var foldername = prompt("Enter new name to rename to: ");
+                var folderName = prompt("Enter new name to rename to: ");
                 finished = 0;
                 exists = 0;
-                file_or_folder_exists(currentFolder, foldername, fsStorage);
+                fileOrFolderExists(currentFolder, folderName, fsStorage);
                 if (exists) {
                     alert("there is already a file or folder in current dir with that name");
                     break;
                 }
-                if (foldername !== null && foldername !== '') {
-                    renameme(currentFolder, fsStorage, foldername, myClick);
+                if (folderName !== null && folderName !== '') {
+                    renameMe(currentFolder, fsStorage, folderName, myClick);
                     buildFlatArray();
                     drawLeft();
                     drawRight();
@@ -172,7 +172,7 @@ function drawRight() {
         // Hide it AFTER the action was triggered
         $(".custom-menu2").hide(100);
     });
-    print_path(currentFolder, fsStorage);
+    PrintPath(currentFolder, fsStorage);
 }
 
 function drawNav() {

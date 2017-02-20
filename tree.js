@@ -76,7 +76,7 @@
       $('.left_view').append('<ul class="left0"><img src="./images/closed_dirs.jpg">root</ul>');
       for (var i = 0; i < fsStorage.length; i++) {
           if (fsStorage[i].children)
-              pass_on(fsStorage[i].children, '.left0');
+              passOn(fsStorage[i].children, '.left0');
 
       }
       $('.left_view [class^="left"]').click(function(event) {
@@ -116,13 +116,13 @@
       });
   }
 
-  function pass_on(myArray, myparent) {
+  function passOn(myArray, myparent) {
       for (var i = 0; i < myArray.length; i++) {
           if (myArray[i].children) {
               $(myparent).append('<ul class="left' + myArray[i].id + '"><img src="./images/closed_dirs.jpg">' + myArray[i].name + '</ul>');
           }
           if (myArray[i].children) {
-              pass_on(myArray[i].children, '.left' + myArray[i].id);
+              passOn(myArray[i].children, '.left' + myArray[i].id);
           }
       }
 
@@ -151,9 +151,9 @@
 
   }
 
-  function open_file(myId, myArray) {
+  function openFile(myId, myArray) {
       myContent = '';
-      find_content_of_file(myId, myArray);
+      findContentOfFile(myId, myArray);
       var original_text = myContent;
       $('.right_view').html('<textarea class="file_text" rows="10" cols="50">' + original_text + '</textarea></br><button class="save">Save</button><button class="cancel">Cancel</button>');
 
@@ -172,7 +172,7 @@
       return;
   }
 
-  function find_content_of_file(myId, myArray) {
+  function findContentOfFile(myId, myArray) {
 
       if (!myArray) {
           return;
@@ -183,7 +183,7 @@
               myContent = myArray[i].content;
           }
           if (myArray[i].children) {
-              find_content_of_file(myId, myArray[i].children);
+              findContentOfFile(myId, myArray[i].children);
           }
       }
       return;
@@ -211,17 +211,17 @@
       return;
   }
 
-  function what_is_parent_of(myId, myArray) {
+  function WhatIsParentOf(myId, myArray) {
       parent = -1;
       if (myId == 0) {
           return parent;
       }
-      find_parent(myId, myArray);
+      findParent(myId, myArray);
       //  console.log(parent);
       return parent;
   }
 
-  function find_parent(myId, myArray) {
+  function findParent(myId, myArray) {
       if (!myArray) {
           return;
       }
@@ -233,7 +233,7 @@
                       parent = myArray[i].id;
                   }
               }
-              find_parent(myId, myArray[i].children);
+              findParent(myId, myArray[i].children);
           }
       }
       return;
@@ -242,14 +242,14 @@
 
 
 
-  function print_path(myId, myArray) {
+  function PrintPath(myId, myArray) {
       var a = 0;
       var path = '';
-      a = what_is_parent_of(myId, myArray);
+      a = WhatIsParentOf(myId, myArray);
       path += a + '-';
       basePath.push(a);
       while (a != -1) {
-          a = what_is_parent_of(a, myArray);
+          a = WhatIsParentOf(a, myArray);
           if (a != -1) {
               path += a + '-';
               basePath.push(a);
@@ -377,14 +377,14 @@
       return;
   }
 
-  function eraseMe(location, myArray, myid) {
+  function eraseMe(location, myArray, myId) {
       if (finished == 1) {
           return;
       }
       for (var i = 0; i < myArray.length; i++) {
           if (location == myArray[i].id) {
               for (var x = 0; x < myArray[i].children.length; x++) {
-                  if (myid == myArray[i].children[x].id) {
+                  if (myId == myArray[i].children[x].id) {
                       //   console.log("erase:" + myArray.name);
                       myArray[i].children.splice(x, 1);
                       finished = 1;
@@ -393,34 +393,32 @@
               }
           }
           if (myArray[i].children) {
-              eraseMe(location, myArray[i].children, myid);
+              eraseMe(location, myArray[i].children, myId);
           }
       }
   }
 
-  function renameme(location, myArray, newname, myid) {
+  function renameMe(location, myArray, newName, myId) {
       if (finished == 1) {
           return;
       }
       for (var i = 0; i < myArray.length; i++) {
           if (location == myArray[i].id){
               for (var x = 0; x < myArray[i].children.length; x++) {
-                  if (myid == myArray[i].children[x].id) {
+                  if (myId == myArray[i].children[x].id) {
                       //   console.log("erase:" + myArray.name);
-                      myArray[i].children[x].name = newname;
+                      myArray[i].children[x].name = newName;
                       finished = 1;
                       return;
                   }
               }
       }
           if (myArray[i].children)
-              renameme(location, myArray[i].children, newname, myid);
+              renameMe(location, myArray[i].children, newName, myId);
       }
-
   }
 
-
-  function file_or_folder_exists(location, foldername, myArray) {
+  function fileOrFolderExists(location, folderName, myArray) {
 
       if (finished == 1) {
           return;
@@ -428,7 +426,7 @@
       for (var i = 0; i < myArray.length; i++) {
           if (location == myArray[i].id){
               for (var x = 0; x < myArray[i].children.length; x++) {
-                  if (foldername == myArray[i].children[x].name) {
+                  if (folderName == myArray[i].children[x].name) {
                       //   console.log("erase:" + myArray.name);
                       exists = 1;
                       finished = 1;
@@ -437,9 +435,7 @@
               }
       }
           if (myArray[i].children) {
-              file_or_folder_exists(location, foldername, myArray[i].children);
+              fileOrFolderExists(location, folderName, myArray[i].children);
           }
       }
-
-
   }
