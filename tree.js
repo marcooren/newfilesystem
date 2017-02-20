@@ -344,6 +344,10 @@
 
   function buildMe(flatArray, newFileSystem) {
       for (var i = 1; i < flatArray.length; i++) {
+          if(idCounter<1+flatArray[i].id) {
+              idCounter=flatArray[i].id+1;
+              console.log(idCounter);
+          }
           if (flatArray[i].content) {
               createFileIn2(flatArray[i].parent, newFileSystem, flatArray[i].name, flatArray[i].content, 2, flatArray[i].id);
           } else createFileIn2(flatArray[i].parent, newFileSystem, flatArray[i].name, flatArray[i].content, 1, flatArray[i].id);
