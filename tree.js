@@ -86,7 +86,9 @@
           console.log(($(this).attr('class').replace("left", '')));
           var myclick = +($(this).attr('class').replace("left", ''));
           found = 0;
-          folderStack.push(currentFolder);
+          if(myclick!=currentFolder) {
+              folderStack.push(currentFolder);
+          }
           FileOrFolder(myclick, fsStorage);
           if (found == 2) {
               currentFolder = +($(this).attr('class').replace("left", ''));
