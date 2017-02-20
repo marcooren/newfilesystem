@@ -1,18 +1,18 @@
 "use strict";
   var currentFolder = 0;
   var printed = 0;
-  var folder_stack = [];
-  var forward_folder_stack = [];
-  folder_stack[0] = 0;
+  var folderStack = [];
+  var forwardFolderStack = [];
+  folderStack[0] = 0;
   var idCounter = 89;
   var finished = 0;
   var newArray = [];
   var exists = 0;
   var found = 0;
   var parent = -1;
-  var my_content = '';
+  var myContent = '';
   var basePath = [];
-  var myclick = '';
+  var myClick = '';
   var fsStorage = [{
       id: 0,
       name: 'root',
@@ -39,39 +39,7 @@
           { id: 11, name: 'file6.txt', content: 'tggfg dfd jjfgdgsgdfsghgfhrgfhfhfhxt' },
       ]
   }];
-
-
   var basepath = "root:\\";
-
-  function printCurrentFolder() {
-      printed = 0;
-      printChildrenOfFolderWithIdOf(currentFolder, fsStorage);
-  }
-
-  function printChildrenOfFolderWithIdOf(myId, myArray) {
-      if (printed)
-          return;
-      if (!myArray) {
-          return;
-      }
-      for (var i = 0; i < myArray.length; i++) {
-          if (myArray[i].id == myId) {
-              //   console.log("showing content of:");
-              //   console.log("<" + myArray[i].name + ">");
-              //console.log("--" + myArray[i].children);
-              for (var x = 0; x < myArray[i].children.length; x++) {
-                  if (myArray[i].children[x].children) {
-                      //   console.log("------" + myArray[i].children[x].name + " <fold>");
-                      $('.left_view').append('<div class="left' + myArray[i].children[x].id + '">' + myArray[i].children[x].name + '</div>');
-                  }
-                  // else
-                  //    console.log("------" + myArray[i].children[x].name + " <file>");
-              }
-              printed = 1;
-              return;
-          } else printChildrenOfFolderWithIdOf(myId, myArray[i].children);
-      }
-  }
 
   function printCurrentFolder2() {
       printed = 0;
@@ -103,7 +71,7 @@
       }
   }
 
-  function print_tree() {
+  function printTree() {
       $('.left_view').html('');
       $('.left_view').append('<ul class="left0"><img src="./images/closed_dirs.jpg">root</ul>');
       for (var i = 0; i < fsStorage.length; i++) {
@@ -116,7 +84,7 @@
           console.log(($(this).attr('class').replace("left", '')));
           var myclick = +($(this).attr('class').replace("left", ''));
           found = 0;
-          folder_stack.push(currentFolder);
+          folderStack.push(currentFolder);
           FileOrFolder(myclick, fsStorage);
           if (found == 2) {
               currentFolder = +($(this).attr('class').replace("left", ''));
@@ -184,9 +152,9 @@
   }
 
   function open_file(myId, myArray) {
-      my_content = '';
+      myContent = '';
       find_content_of_file(myId, myArray);
-      var original_text = my_content;
+      var original_text = myContent;
       $('.right_view').html('<textarea class="file_text" rows="10" cols="50">' + original_text + '</textarea></br><button class="save">Save</button><button class="cancel">Cancel</button>');
 
       $('.save').click(function(event) {
@@ -212,7 +180,7 @@
       for (var i = 0; i < myArray.length; i++) {
           if (myId == myArray[i].id) {
               found = 1;
-              my_content = myArray[i].content;
+              myContent = myArray[i].content;
           }
           if (myArray[i].children) {
               find_content_of_file(myId, myArray[i].children);
@@ -349,17 +317,17 @@
           }
           //    console.log(oldArray[i].name);
           if (oldArray[i].children) {
-              folder_stack.push(currentFolder);
+              folderStack.push(currentFolder);
               currentFolder = oldArray[i].id;
               buildArray(newArray, oldArray[i].children);
-              currentFolder = folder_stack.pop();
+              currentFolder = folderStack.pop();
           } //else return;
       }
   }
 
   function buildFlatArray() {
-      folder_stack = [];
-      folder_stack[0] = 0;
+      folderStack = [];
+      folderStack[0] = 0;
       newArray = [];
       var oldCurrentFolder = currentFolder;
       currentFolder = 0;

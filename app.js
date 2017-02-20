@@ -87,22 +87,22 @@ $(document).ready(function() {
 function drawLeft() {
     //  printCurrentFolder();
     print_path(currentFolder, fsStorage);
-    print_tree();
+    printTree();
 
 }
 
 function drawRight() {
 
-    //  var myclick = '';
+    //  var myClick = '';
     printCurrentFolder2();
     $('.right_view [class^="right"]').off();
     $('.right_view [class^="right"]').click(function(event) {
         event.stopPropagation();
         //console.log(($(this).attr('class').replace("right", '')));
-        myclick = +($(this).attr('class').replace("right", ''));
+        myClick = +($(this).attr('class').replace("right", ''));
         found = 0;
-        folder_stack.push(currentFolder);
-        FileOrFolder(myclick, fsStorage);
+        folderStack.push(currentFolder);
+        FileOrFolder(myClick, fsStorage);
         //   console.log(found);
         //  console.log(found);
         if (found == 2) {
@@ -110,7 +110,7 @@ function drawRight() {
         }
         drawRight();
         if (found == 1) {
-            open_file(myclick, fsStorage);
+            open_file(myClick, fsStorage);
         }
 
     });
@@ -118,7 +118,7 @@ function drawRight() {
     $('.right_view [class^="right"]').on("contextmenu", function(event) {
         event.stopPropagation();
         event.preventDefault();
-        myclick = +($(this).attr('class').replace("right", ''));
+        myClick = +($(this).attr('class').replace("right", ''));
 
         $(".custom-menu2").finish().toggle(100).css({
             top: event.pageY + "px",
@@ -145,7 +145,7 @@ function drawRight() {
             case "1":
                 //   console.log(this);
                 finished = 0;
-                eraseMe(currentFolder, fsStorage, myclick);
+                eraseMe(currentFolder, fsStorage, myClick);
                 //               createFileIn(currentFolder, fsStorage, foldername, '', 1);
                 buildFlatArray();
                 drawLeft();
@@ -161,7 +161,7 @@ function drawRight() {
                     break;
                 }
                 if (foldername !== null && foldername !== '') {
-                    renameme(currentFolder, fsStorage, foldername, myclick);
+                    renameme(currentFolder, fsStorage, foldername, myClick);
                     buildFlatArray();
                     drawLeft();
                     drawRight();
@@ -185,9 +185,9 @@ function drawNav() {
     // $('.path').val(currentFolder);
     $('.back').click(function(event) {
         event.stopPropagation();
-        if (folder_stack.length > 0) {
-            forward_folder_stack.push(currentFolder);
-            currentFolder = folder_stack.pop();
+        if (folderStack.length > 0) {
+            forwardFolderStack.push(currentFolder);
+            currentFolder = folderStack.pop();
         }
 
         //  console.log("back to :" + currentFolder);
@@ -199,9 +199,9 @@ function drawNav() {
         event.stopPropagation();
 
 
-        if (forward_folder_stack.length > 0) {
-            folder_stack.push(currentFolder);
-            currentFolder = forward_folder_stack.pop();
+        if (forwardFolderStack.length > 0) {
+            folderStack.push(currentFolder);
+            currentFolder = forwardFolderStack.pop();
         }
         main();
     });
