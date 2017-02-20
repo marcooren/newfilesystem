@@ -1,22 +1,16 @@
-  var exit = false;
-  var parent_id = 0;
+"use strict"
   var currentFolder = 0;
-  var lastId = 0;
   var printed = 0;
   var folder_stack = [];
   var forward_folder_stack = [];
   folder_stack[0] = 0;
-  var completed_add = 0;
   var idCounter = 89;
   var finished = 0;
   var newArray = [];
   var exists = 0;
-  var newFileSystem = [];
   var found = 0;
-  var depth = 0;
   var parent = -1;
   var my_content = '';
-  var back_history = [];
   var basePath = [];
   var myclick = '';
   var fsStorage = [{
@@ -46,7 +40,7 @@
       ]
   }];
 
-  var begin = fsStorage[0].children;
+
   var basepath = "root:\\";
 
   function printCurrentFolder() {
@@ -156,18 +150,21 @@
 
   function pass_on(myArray, myparent) {
       for (var i = 0; i < myArray.length; i++) {
-          if (myArray[i].children)
+          if (myArray[i].children) {
               $(myparent).append('<ul class="left' + myArray[i].id + '"><img src="./images/closed_dirs.jpg">' + myArray[i].name + '</ul>');
-          if (myArray[i].children)
+          }
+          if (myArray[i].children) {
               pass_on(myArray[i].children, '.left' + myArray[i].id);
+          }
       }
 
   }
 
   function FileOrFolder(myId, myArray) {
 
-      if (!myArray)
+      if (!myArray) {
           return;
+      }
 
       for (var i = 0; i < myArray.length; i++) {
           if (myId == myArray[i].id) {
@@ -178,8 +175,9 @@
               }
           }
           //    console.log(myArray[i].name);
-          if (myArray[i].children)
+          if (myArray[i].children) {
               FileOrFolder(myId, myArray[i].children);
+          }
       }
       return;
 
@@ -188,7 +186,7 @@
   function open_file(myId, myArray) {
       my_content = '';
       find_content_of_file(myId, myArray);
-      original_text = my_content;
+      var original_text = my_content;
       $('.right_view').html('<textarea class="file_text" rows="10" cols="50">' + original_text + '</textarea></br><button class="save">Save</button><button class="cancel">Cancel</button>');
 
       $('.save').click(function(event) {
@@ -208,15 +206,17 @@
 
   function find_content_of_file(myId, myArray) {
 
-      if (!myArray)
+      if (!myArray) {
           return;
+      }
       for (var i = 0; i < myArray.length; i++) {
           if (myId == myArray[i].id) {
               found = 1;
               my_content = myArray[i].content;
           }
-          if (myArray[i].children)
+          if (myArray[i].children) {
               find_content_of_file(myId, myArray[i].children);
+          }
       }
       return;
 
@@ -224,8 +224,9 @@
 
   function setContentOfFile(text, myId, myArray) {
       //   console.log(text);
-      if (!myArray)
+      if (!myArray) {
           return;
+      }
 
       for (var i = 0; i < myArray.length; i++) {
           if (myId == myArray[i].id) {
@@ -235,28 +236,31 @@
               //  console.log(myArray[i].content);
           }
 
-          if (myArray[i].children)
+          if (myArray[i].children) {
               setContentOfFile(text, myId, myArray[i].children);
+          }
       }
       return;
   }
 
   function what_is_parent_of(myId, myArray) {
       parent = -1;
-      if (myId == 0)
+      if (myId == 0) {
           return parent;
+      }
       find_parent(myId, myArray);
       //  console.log(parent);
       return parent;
   }
 
   function find_parent(myId, myArray) {
-      if (!myArray)
+      if (!myArray) {
           return;
+      }
       for (var i = 0; i < myArray.length; i++) {
 
           if (myArray[i].children) {
-              for (x = 0; x < myArray[i].children.length; x++) {
+              for (var x = 0; x < myArray[i].children.length; x++) {
                   if (myId == myArray[i].children[x].id) {
                       parent = myArray[i].id;
                   }
@@ -268,9 +272,7 @@
 
   }
 
-  function draw_path(myId, myArray) {
 
-  }
 
   function print_path(myId, myArray) {
       var a = 0;
@@ -313,27 +315,30 @@
               }
               return;
           }
-          if (fsStorage[i].children)
+          if (fsStorage[i].children) {
               createFileIn(location, fsStorage[i].children, folderName, content, myType);
+          }
       }
       return;
   }
 
   function buildArray(newArray, oldArray) {
       for (var i = 0; i < oldArray.length; i++) {
-          if (oldArray[i].id == currentFolder)
+          if (oldArray[i].id == currentFolder) {
               newArray.push({
                   "id": oldArray[i].id,
                   "name": oldArray[i].name,
                   "parent": null
               });
+          }
           else {
-              if (!oldArray[i].content)
+              if (!oldArray[i].content) {
                   newArray.push({
                       "id": oldArray[i].id,
                       "name": oldArray[i].name,
                       "parent": currentFolder
                   });
+              }
               else
                   newArray.push({
                       "id": oldArray[i].id,
@@ -381,45 +386,35 @@
       for (var i = 0; i < fsStorage.length; i++) {
           if (location == fsStorage[i].id) {
               //   console.log("enter here: " + fsStorage[i].id);
-              if (myType == 2)
+              if (myType == 2) {
                   fsStorage[i].children.push({
                       "id": myId,
                       "name": folderName,
                       "content": content
                   });
-              if (myType == 1)
+              }
+              if (myType == 1) {
                   fsStorage[i].children.push({
                       "id": myId,
                       "name": folderName,
                       "children": []
                   });
+              }
               return;
           }
-          if (fsStorage[i].children)
+          if (fsStorage[i].children) {
               createFileIn2(location, fsStorage[i].children, folderName, content, myType, myId);
+          }
       }
       return;
   }
 
-  function deleteFileOrFolder() {
-      //  console.log('delete file folder');
-      var folderName = readlineSync.question('type the name of the file or folder to delete:');
-
-      // console.log(folderName);
-      finished = 0;
-      if ((folderName == "root"))
-          console.log("can not erase root");
-      eraseMe(currentFolder, fsStorage, folderName);
-      // console.log("erased: " + folderName);
-  }
-
-
-
   function eraseMe(location, myArray, myid) {
-      if (finished == 1)
+      if (finished == 1) {
           return;
+      }
       for (var i = 0; i < myArray.length; i++) {
-          if (location == myArray[i].id)
+          if (location == myArray[i].id) {
               for (var x = 0; x < myArray[i].children.length; x++) {
                   if (myid == myArray[i].children[x].id) {
                       //   console.log("erase:" + myArray.name);
@@ -428,16 +423,19 @@
                       return;
                   }
               }
-          if (myArray[i].children)
+          }
+          if (myArray[i].children) {
               eraseMe(location, myArray[i].children, myid);
+          }
       }
   }
 
   function renameme(location, myArray, newname, myid) {
-      if (finished == 1)
+      if (finished == 1) {
           return;
+      }
       for (var i = 0; i < myArray.length; i++) {
-          if (location == myArray[i].id)
+          if (location == myArray[i].id){
               for (var x = 0; x < myArray[i].children.length; x++) {
                   if (myid == myArray[i].children[x].id) {
                       //   console.log("erase:" + myArray.name);
@@ -446,6 +444,7 @@
                       return;
                   }
               }
+      }
           if (myArray[i].children)
               renameme(location, myArray[i].children, newname, myid);
       }
@@ -455,10 +454,11 @@
 
   function file_or_folder_exists(location, foldername, myArray) {
 
-      if (finished == 1)
+      if (finished == 1) {
           return;
+      }
       for (var i = 0; i < myArray.length; i++) {
-          if (location == myArray[i].id)
+          if (location == myArray[i].id){
               for (var x = 0; x < myArray[i].children.length; x++) {
                   if (foldername == myArray[i].children[x].name) {
                       //   console.log("erase:" + myArray.name);
@@ -467,8 +467,10 @@
                       return;
                   }
               }
-          if (myArray[i].children)
+      }
+          if (myArray[i].children) {
               file_or_folder_exists(location, foldername, myArray[i].children);
+          }
       }
 
 

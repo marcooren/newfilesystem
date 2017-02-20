@@ -1,3 +1,4 @@
+"use strict"
 $(document).ready(function() {
 
     init();
@@ -104,13 +105,13 @@ function drawRight() {
         FileOrFolder(myclick, fsStorage);
         //   console.log(found);
         //  console.log(found);
-        if (found == 2)
+        if (found == 2) {
             currentFolder = +($(this).attr('class').replace("right", ''));
-
+        }
         drawRight();
-        if (found == 1)
+        if (found == 1) {
             open_file(myclick, fsStorage);
-
+        }
 
     });
 
