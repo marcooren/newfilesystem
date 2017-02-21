@@ -87,8 +87,9 @@ $(document).ready(function() {
 
 function drawLeft() {
     //  printCurrentFolder();
-    PrintPath(currentFolder, fsStorage);
+  //  PrintPath(currentFolder, fsStorage);
     printTree();
+    givePath();
 
 }
 
@@ -108,6 +109,8 @@ function drawRight() {
         //  console.log(found);
         if (found == 2) {
             currentFolder = +($(this).attr('class').replace("right", ''));
+            givePath();
+
         }
         drawRight();
         if (found == 1) {

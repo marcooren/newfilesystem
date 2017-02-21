@@ -215,6 +215,39 @@
       return;
   }
 
+  function WhatIsNameOf(myId,myArray){
+      var myName='';
+      if(myId==0) {
+          return 'root';
+      }
+      (function findName(myId,myArray){
+          if (!myArray) {
+              return;
+          }
+          for (var i = 0; i < myArray.length; i++) {
+              if (myArray[i].id == myId) {
+                  myName= myArray[i].name
+              }
+              if (myArray[i].children) {
+                  findName(myId, myArray[i].children);
+              }
+          }
+          return;
+
+      }(myId,myArray));
+
+      return myName;
+  }
+
+
+
+
+
+
+
+
+
+
   function WhatIsParentOf(myId, myArray) {
       parent = -1;
       if (myId == 0) {
@@ -244,23 +277,47 @@
 
   }
 
+  function getName(myId,myArray){
 
+
+      givePath();
+  }
+
+
+
+function givePath(){
+
+
+    //  return basePath;
+}
 
   function PrintPath(myId, myArray) {
+    if (currentFolder==0) {
+        basePath='root/';
+        $('.path').val("root,");
+        console.log(basePath);
+        return;
+    }
+        basePath = [WhatIsNameOf(currentFolder, myArray)];
       var a = 0;
       var path = '';
       a = WhatIsParentOf(myId, myArray);
       path += a + '-';
-      basePath.push(a);
+      basePath.push(WhatIsNameOf(a,myArray));
       while (a != -1) {
           a = WhatIsParentOf(a, myArray);
           if (a != -1) {
               path += a + '-';
-              basePath.push(a);
+              basePath.push(WhatIsNameOf(a,myArray));
           }
       }
-     // console.log(path);
-      return path;
+      console.log(basePath.reverse());
+
+
+  //console.log(WhatIsNameOf(3,myArray));
+      $('.path').val(basePath);
+
+      //return path;
   }
 
 
