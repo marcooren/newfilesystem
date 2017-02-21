@@ -241,13 +241,6 @@
 
 
 
-
-
-
-
-
-
-
   function WhatIsParentOf(myId, myArray) {
       parent = -1;
       if (myId == 0) {

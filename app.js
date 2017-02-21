@@ -190,6 +190,35 @@ function drawNav() {
     $('.top').html(nav_menu);
 
     // $('.path').val(currentFolder);
+    $('.goto').click(function(event){
+        event.stopPropagation();
+        var test=$('.path').val();
+        var newPath=test.split(',');
+        console.log(newPath);
+        (function check_path(mypath){
+            if (mypath.length) {
+                if (mypath[0] != 'root' && mypath[0] !='root,') {
+                    return;
+                }
+                if (mypath.length==1){
+                    currentFolder=0;
+                    drawLeft();
+                    drawRight();
+                    return;
+                }
+            }
+             for(var i=1;i<mypath.length;i++)
+             {
+                 if(mypath[0]!='root')
+                     return;
+
+             }
+
+        }(newPath));
+
+
+    });
+
     $('.back').click(function(event) {
         event.stopPropagation();
         if (folderStack.length > 0) {
