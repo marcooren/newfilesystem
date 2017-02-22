@@ -196,23 +196,15 @@ function drawNav() {
         var newPath=test.split(',');
         console.log(newPath);
         (function check_path(mypath){
-            if (mypath.length) {
-                if (mypath[0] != 'root' && mypath[0] !='root,') {
-                    return;
-                }
-                if (mypath.length==1){
-                    currentFolder=0;
-                    drawLeft();
-                    drawRight();
-                    return;
-                }
+            lastId=-1
+            passOn2(fsStorage,newPath,0);
+            console.log("last id: "+lastId);
+            if(lastId!=-1) {
+                folderStack.push(currentFolder);
+                currentFolder = lastId;
+                drawRight();
+                drawLeft();
             }
-             for(var i=1;i<mypath.length;i++)
-             {
-                 if(mypath[0]!='root')
-                     return;
-
-             }
 
         }(newPath));
 

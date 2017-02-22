@@ -13,6 +13,7 @@
   var myContent = '';
   var basePath = [];
   var myClick = '';
+  var lastId=-1;
   var fsStorage = [{
       id: 0,
       name: 'root',
@@ -131,6 +132,27 @@
       }
 
   }
+
+function passOn2(myArray, myparent,x) {
+      if(myparent.length<=x) {
+          return;
+      }
+    for (var i = 0; i < myArray.length; i++) {
+           if(myArray[i].name==myparent[x]){
+               if(myArray[i].children) {
+                   console.log(myArray[i].id);
+                   if (x+1==myparent.length) {
+                       lastId=myArray[i].id;
+                   }
+                   passOn2(myArray[i].children, myparent, x + 1);
+               }
+           }
+    }
+
+}
+
+
+
 
   function FileOrFolder(myId, myArray) {
 
